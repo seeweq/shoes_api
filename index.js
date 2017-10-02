@@ -5,9 +5,19 @@ const app = express()
 var models = require('./models')
 var ObjectId = require('mongodb').ObjectId
 
+
+
+app.use(function(req, res, next) {
+     res.header('Access-Control-Allow-Origin', "*");
+     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+     res.header('Access-Control-Allow-Headers','"Origin,X-Requested-With, Content-Type, Accepet"')
+     next();
+});
+
 app.use(bodyParser.urlencoded({
   extended: false
 }))
+
 app.use(bodyParser.json())
 app.use(express.static('public'));
 
@@ -50,10 +60,11 @@ app.get('/api/shoes/size/:size', function(req, res, next) {
   })
 });
 // GET	/api/shoes/brand/:brandname/size/:size
-app.get('/api/shoes/brand/:brandname/size/:size', function(req, res, next) {
+app.get('/api/shoes/brand/:brandname/size/:size/color/:color', function(req, res, next) {
   var brandname = req.params.brandname;
   var size = req.params.size;
-  models.Stock.find({
+  var color = req.param.color;
+    models.Stock.find({
     brand: brandname,
     size: size
   }, function(err, shoedetails) {
@@ -112,20 +123,7 @@ app.post('/api/shoes/sold/:id', function(req, res, next) {
               })
             }
           })
-      })
-
-
-
-
-
-
-
-
-
-
-
-
-
+      });
 
     var port = 3003; app.listen(process.env.PORT || port, function() {
       console.log('app is now listening :' + port);

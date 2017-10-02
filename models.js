@@ -5,10 +5,10 @@ mongoose.connect(mongoURL, {
 });
 exports.Stock = mongoose.model('stock', {
 
-    color: String,
-    brand: String,
-    price: Number,
-    size: Number,
-    in_stock: Number
-  
+     brand: String,
+     color: String,
+     price: Number,
+     size: Number,
+     in_stock: Number
+
 });

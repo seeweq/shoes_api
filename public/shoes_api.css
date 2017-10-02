@@ -1,0 +1,96 @@
+
+h1
+{
+    font-family: 'Roboto', sans-serif;
+    font-size: 100px;
+    font-weight: 500;
+    font-style: italic;
+
+    margin-top: 1%;
+    margin-bottom: 47px;
+
+    text-align: center;
+
+    color: #800000;
+    border-radius: 50%;
+    text-shadow: .1em .1em .15em #333;
+}
+h2
+{
+    margin-left: 10px;
+
+    color: #800000;
+    text-shadow: .1em .1em .15em #333;
+}
+/*.linePic
+{
+    display: -webkit-box;
+
+    width: 45em;
+    margin-top: -5em;
+    margin-right: auto;
+    /* margin-top: -5em;} */
+
+.addStock
+{
+    margin-left: 44%;
+}
+.head
+{
+    background: radial-gradient(white,#d4af37);
+}
+
+table,
+th,
+td
+{
+    border: solid;
+    border-width: thin;
+}
+table.theTable
+{
+    margin-top: 10px;
+    margin-right: auto;
+    margin-left: auto;
+
+    border-collapse: collapse;
+}
+th,
+td
+{
+    width: 150px;
+
+    text-align: center;
+}
+.addstock
+{
+    margin-bottom: 10px;
+}
+.addbrand
+{
+    margin-bottom: 10px;
+}
+.addcolor
+{
+    margin-bottom: 10px;
+}
+.addsize
+{
+    margin-bottom: 10px;
+}
+.addprice
+{
+    margin-bottom: 10px;
+}
+.addin_stock
+{
+    margin-bottom: 10px;
+}
+.inputsContainer
+{
+    margin-top: 10px;
+    margin-left: 43%;
+}
+.drops{
+  margin-left: 10px;
+}

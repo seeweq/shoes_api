@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="shoes_api.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <title>shoes_catalogue</title>
+</head>
+
+<body>
+  <div class="container">
+
+    <div class="row">
+      <h1>Shoe Catalogue</h1>
+
+    </div>
+    <div class="head">
+      <h2> First Select Here </h2>
+      <script id="dropdownTemp" type="text/x-handlebars-template">
+        <div class="drops">
+          <select class="selectBrand">
+      <option value="brand">Brand</option>
+     {{#each shoe}}
+     <option> {{this.brand}}</option>
+     {{/each}}
+     </select>
+
+          <select class="selectColor">
+    <option value="color">Color</option>
+     {{#each shoe}}
+    <option  class='colorDrop'>{{this.color}}</option>
+     {{/each}}
+   </select>
+
+          <select class="selectSize">
+  <option value="size">Size</option>
+     {{#each shoe}}
+    <option> {{this.size}}</option>
+     {{/each}}
+   </select>
+        </div>
+      </script>
+      <script id="mytableTem" type="text/x-handlebars-template">
+        <table class="theTable">
+          <thead>
+            <th>Brand</th>
+            <th>Color</th>
+            <th>Size</th>
+            <th>Price</th>
+            <th>In_stock</th>
+          </thead>
+          <tbody>
+            {{#each shoe}}
+            <td>{{this.brand}}</td>
+            <td>{{this.color}}</td>
+            <td>{{this.size}}</td>
+            <td>{{this.price}}</td>
+            <td>{{this.in_stock}}</td>
+          </tbody>
+          {{/each}}
+        </table>
+      </script>
+
+      <div id="myDrop">
+      </div>
+
+      <div class="addStock">
+        <button class="searchBton" type="button">Search</button>
+        <button class="stockshow" type="button" align="center">All stock</button>
+      </div>
+
+      <div class="inputsContainer">
+        <div class="addbrand">
+          <input type="text" class="inbrand" placeholder="Add shoe brand"><br>
+        </div>
+        <div class="addcolor">
+          <input type="text" class="incolor" placeholder="Add shoe color"><br>
+        </div>
+        <div class="addsize">
+          <input type="text" class="insize" placeholder="Add shoe size"><br>
+        </div>
+        <div class="addprice">
+          <input type="text" class="inprice" placeholder="Add shoe price"><br>
+        </div>
+        <div class="addin_stock">
+          <input type="text" class="instock" placeholder="Add shoe in_stock"><br>
+        </div>
+        <div class="addstock">
+          <button class="addingStock" type="button" align="center">Add stock</button>
+        </div>
+      </div>
+      <div id="displayTable">
+
+      </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.min.js"></script>
+    <script src="shoes_api.js" charset="utf-8"></script>
+  </div>
+</body>
+
+</html>
