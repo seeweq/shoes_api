@@ -20,23 +20,23 @@
       <script id="dropdownTemp" type="text/x-handlebars-template">
         <div class="drops">
           <select class="selectBrand">
-      <option value="brand">Brand</option>
+      <option>Brand</option>
      {{#each shoe}}
-     <option> {{this.brand}}</option>
+     <option value={{this.brand}}> {{this.brand}}</option>
      {{/each}}
      </select>
 
           <select class="selectColor">
-    <option value="color">Color</option>
+    <option>Color</option>
      {{#each shoe}}
-    <option  class='colorDrop'>{{this.color}}</option>
+    <option  value={{this.color}} >{{this.color}}</option>
      {{/each}}
    </select>
 
           <select class="selectSize">
-  <option value="size">Size</option>
+  <option>Size</option>
      {{#each shoe}}
-    <option> {{this.size}}</option>
+    <option  value={{this.size}}> {{this.size}}</option>
      {{/each}}
    </select>
         </div>
@@ -56,13 +56,18 @@
             <td>{{this.color}}</td>
             <td>{{this.size}}</td>
             <td>{{this.price}}</td>
-            <td>{{this.in_stock}}</td>
+            <td>{{this.in_stock}}<button onclick='takenShoe("{{_id}}")' value ={{_id}} id="shoePurchase">buy</button></td>
           </tbody>
           {{/each}}
         </table>
       </script>
 
       <div id="myDrop">
+      </div>
+
+
+
+      <div id="takenShoe">
       </div>
 
       <div class="addStock">
