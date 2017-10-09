@@ -8,10 +8,10 @@ var ObjectId = require('mongodb').ObjectId
 
 
 app.use(function(req, res, next) {
-     res.header('Access-Control-Allow-Origin', "*");
-     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-     res.header('Access-Control-Allow-Headers','"Origin,X-Requested-With, Content-Type, Accepet"')
-     next();
+  res.header('Access-Control-Allow-Origin', "*");
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  res.header('Access-Control-Allow-Headers', '"Origin,X-Requested-With, Content-Type, Accepet"')
+  next();
 });
 
 app.use(bodyParser.urlencoded({
@@ -26,22 +26,25 @@ app.get('/api/shoes', function(req, res, next) {
     if (err) {
       return next(err);
     } else {
-      res.json({results})
+      res.json({
+        results
+      })
     }
   })
 })
 // GET	/api/shoes/brand/:brandname
 app.get('/api/shoes/brand/:brandname', function(req, res, next) {
   var brandname = req.params.brandname;
-  // console.log('hhh');
-  // console.log(brandname);
+
   models.Stock.find({
     brand: brandname
   }, function(err, shoeBrand) {
     if (err) {
       return next(err)
     } else {
-      res.json({shoeBrand})
+      res.json({
+        shoeBrand
+      })
     }
 
   })
@@ -55,7 +58,23 @@ app.get('/api/shoes/size/:size', function(req, res, next) {
     if (err) {
       return next(err)
     } else {
-      res.json({shoeSize})
+      res.json({
+        shoeSize
+      })
+    }
+  })
+});
+app.get('/api/shoes/color/:color', function(req, res, next) {
+  var color = req.params.color;
+  models.Stock.find({
+    color: color
+  }, function(err, shoeColor) {
+    if (err) {
+      return next(err)
+    } else {
+      res.json({
+        shoeColor
+      })
     }
   })
 });
@@ -64,87 +83,160 @@ app.get('/api/shoes/brand/:brandname/size/:size/color/:color', function(req, res
   var brandname = req.params.brandname;
   var size = req.params.size;
   var color = req.param.color;
-    models.Stock.find({
+  models.Stock.find({
     brand: brandname,
     size: size,
-    color:color
+    color: color
   }, function(err, shoeDetails) {
     if (err) {
       return next(err)
     } else {
-      res.json({shoeDetails})
-    }
-  })
-})
-
-
-
-app.post('/api/shoes', function(req, res, next) {
-
-  models.Stock.create({
-    color: req.body.color,
-    brand: req.body.brand,
-    price: req.body.price,
-    size: req.body.size,
-    in_stock: req.body.in_stock
-  }, function(err, results) {
-    if (err) {
-      return next(err);
-    } else {
-      res.json(results)
+      res.json({
+        shoeDetails
+      })
     }
   })
 });
 
+app.get('/api/shoes/brand', function(req, res, next) {
+  models.Stock.find({}, function(err, theBrand) {
+    var myBrands = [];
+    var mapBrand = {}
 
+    for (var i = 0; i < theBrand.length; i++) {
+      var newBrands = theBrand[i];
+      if (mapBrand[newBrands.brand] === undefined) {
+        mapBrand[newBrands.brand] = newBrands.brand;
+        myBrands.push(newBrands.brand)
+      }
+    }
+    if (err) {
+      return next(err)
+    }
+    res.json({
+      myBrands
+    })
+  })
+})
+
+
+app.get('/api/shoes/size', function(req, res, next) {
+  models.Stock.find({}, function(err, theSize) {
+    var mySize = [];
+    var mapSize = {}
+
+    for (var i = 0; i < theSize.length; i++) {
+      var newSize = theSize[i];
+      if (mapSize[newSize.size] === undefined) {
+        mapSize[newSize.size] = newSize.size;
+        mySize.push(newSize.size)
+      }
+    }
+    if (err) {
+      return next(err)
+    }
+    res.json({
+      mySize
+    })
+  })
+})
+app.get('/api/shoes/color', function(req, res, next) {
+  models.Stock.find({}, function(err, theColor) {
+    var myColors = [];
+    var mapColors = {}
+
+    for (var i = 0; i < theColor.length; i++) {
+      var newColor = theColor[i];
+      if (mapColors[newColor.color] === undefined) {
+        mapColors[newColor.color] = newColor.color;
+        myColors.push(newColor.color)
+      }
+    }
+    if (err) {
+      return next(err)
+    }
+    res.json({
+      myColors
+    })
+  })
+})
+// console.log("--------------");
+app.post('/api/shoes', function(req, res, next) {
+  var brand = req.body.brand;
+  var color = req.body.color;
+  var price = req.body.price;
+  var size = req.body.size;
+  var in_stock = req.body.in_stock;
+
+  models.Stock.findOneAndUpdate({
+    brand: brand,
+    color: color,
+    price: price,
+    size: size
+  }, {
+    $inc: {
+      in_stock: in_stock
+    }
+  }, function(err, result) {
+    if (err) {
+      console.log(err);
+    } else if (!result) {
+      models.Stock.create({
+        brand: brand,
+        color: color,
+        price: price,
+        size: size,
+        in_stock: in_stock
+      }, function(err, result) {
+        if (err) {
+          console.log(err);
+        }
+      });
+    }
+    res.json({
+      results: result
+    });
+  });
+
+});
+
+// console.log('=====================');
 // POST	/api/shoes/sold/:id
 app.post('/api/shoes/sold/:id', function(req, res, next) {
-      console.log(req.params.id);
-      var id = req.params.id;
-      models.Stock.findOneAndUpdate({
-          _id: ObjectId(id)
-        }, {
-          $inc: {
-            "in_stock" : - 1
-          }
-          },
-          {
-            upsert: false,
-            new:true
-          },
-          function(err, results) {
-            if (err) {
-              return res.json({
-                status: "error",
-                error: err,
-                results: []
-              })
-            } else {
-              res.json({
-                status: "successful",
-                results: results
-              })
-            }
-          })
-      });
+  console.log(req.params.id);
+  var id = req.params.id;
+  models.Stock.findOneAndUpdate({
+      _id: ObjectId(id)
+    }, {
+      $inc: {
+        "in_stock": -1
+      }
+    }, {
+      upsert: false,
+      // new: true
+    },
+    function(err, results) {
+      if (err) {
+        return res.json({
+          status: "error",
+          error: err,
+          results: []
+        })
+      }
+      if (results.in_stock <= 0) {
+        results.remove()
+      }
+      res.json({
+        status: "successful",
+        results: results
+      })
 
-      // app.post('/api/shoes/brand', function(req, res, next) {
-      //
-      //   models.Stock.find({},{
-      //     color: 0,
-      //     brand: 1,
-      //     price: 0,
-      //     size:0,
-      //     in_stock: 0
-      //   }, function(err, brands) {
-      //     if (err) {
-      //       return next(err);
-      //     } else {
-      //       res.json({brands})
-      //     }
-      //   })
-      // });
+    })
+});
 
-    var port = 3003; app.listen(process.env.PORT || port, function() {
-      console.log('app is now listening :' + port);
-    });
+
+
+var port = 3003;
+app.listen(process.env.PORT || port, function() {
+  console.log('app is now listening :' + port);
+});

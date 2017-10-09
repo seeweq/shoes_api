@@ -17,26 +17,34 @@
     </div>
     <div class="head">
       <h2> First Select Here </h2>
-      <script id="dropdownTemp" type="text/x-handlebars-template">
-        <div class="drops">
+      <script id="brandTemp" type="text/x-handlebars-template">
+        <div class="brandDrop">
           <select class="selectBrand">
-      <option>Brand</option>
-     {{#each shoe}}
-     <option value={{this.brand}}> {{this.brand}}</option>
+      <option value="" >Brand</option>
+     {{#each brand}}
+     <option value="{{this}}"> {{this}}</option>
      {{/each}}
      </select>
+   </div>
+    </script>
 
+<script id="colorTemp" type="text/x-handlebars-template">
+  <div id="colorDrop">
           <select class="selectColor">
-    <option>Color</option>
-     {{#each shoe}}
-    <option  value={{this.color}} >{{this.color}}</option>
+    <option value="" >Color</option>
+     {{#each color}}
+    <option value="{{this}}">{{this}}</option>
      {{/each}}
    </select>
+</div>
+</script>
 
+<script id="sizeTemp" type="text/x-handlebars-template">
+  <div id="sizeDrop">
           <select class="selectSize">
-  <option>Size</option>
-     {{#each shoe}}
-    <option  value={{this.size}}> {{this.size}}</option>
+  <option value="" >Size</option>
+     {{#each size}}
+    <option value="{{this}}" > {{this}}</option>
      {{/each}}
    </select>
         </div>
@@ -56,23 +64,25 @@
             <td>{{this.color}}</td>
             <td>{{this.size}}</td>
             <td>{{this.price}}</td>
-            <td>{{this.in_stock}}<button onclick='takenShoe("{{_id}}")' value ={{_id}} id="shoePurchase">buy</button></td>
+            <td>{{this.in_stock}}  <button onclick='takenShoe("{{_id}}")' value ={{_id}} id="shoePurchase">buy</button></td>
           </tbody>
           {{/each}}
         </table>
       </script>
 
-      <div id="myDrop">
+      <div id="myBrandDrop">
+      </div>
+      <div id="myColorDrop">
+      </div>
+      <div id="mySizeDrop">
       </div>
 
 
 
-      <div id="takenShoe">
-      </div>
 
       <div class="addStock">
         <button class="searchBton" type="button">Search</button>
-        <button class="stockshow" type="button" align="center">All stock</button>
+
       </div>
 
       <div class="inputsContainer">
