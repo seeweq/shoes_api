@@ -9,8 +9,8 @@
   var sizeTemplate = document.querySelector('#sizeTemp').innerHTML;
   var dropForSize = Handlebars.compile(sizeTemplate)
 
-  var addBtn = document.querySelector('.addingStock')
-  var mySearchBton = document.querySelector('.searchBton');
+  var addBtn = document.querySelector('#addingStock')
+  var mySearchBton = document.querySelector('#searchBton');
   var displayTable = document.querySelector('#displayTable')
   var showColorDrop = document.querySelector('#myColorDrop')
   var showBrandDrop = document.querySelector('#myBrandDrop')
@@ -37,7 +37,11 @@ function shoeAdded(){
 
 }
 shoeAdded();
-
+$(document).ready(function(){
+ $("#myAddButton").click(function(){
+     $("#inputsToAddStock").modal();
+ });
+})
 
   function newShoeAdd(){
   addBtn.addEventListener('click', function() {
@@ -111,7 +115,7 @@ else if(colorSelect!=="" && brandSelect =="" && sizeSelect ==""){
       }
     });
   }
-else  {
+else  if(sizeSelect !=="" && brandSelect =="" && colorSelect =="") {
       $.ajax({
         url : '/api/shoes/size/'+ sizeSelect,
         type: 'GET',
@@ -126,33 +130,32 @@ else  {
         }
       });
 }
+else{
+  filterByAll()
+}
 })
 }
 filterData();
-//  mySearchBton.addEventListener('click', function(){
-// });
-// mySearchBton.addEventListener('click', function(){
-//   var sizeSelect = document.querySelector('.selectSize').value;
-//   var brandSelect = document.querySelector('.selectBrand').value;
-//   var colorSelect = document.querySelector('.selectColor').value;
-//    $.ajax({
-//      url : '/api/shoes/brand/'+ brandSelect + '/size/'+ sizeSelect + '/color/' + colorSelect,
-//      type: 'GET',
-//      success: function(allResults){
-//        displayTable.innerHTML = showTemplate({
-//          shoe: allResults.shoeDetails
-//        })
-//     // console.log(allResults.shoeDetails);
-//      },
-//      error:function(error){
-//        alert(error)
-//      }
-//    })
-// });
-//
-// var takenShoe = document.querySelector('#takenShoe');
-// takenShoe.addEventListener('click', function(evt){
-// var stockAvailible = [];
+
+function filterByAll(){
+  var sizeSelect = document.querySelector('.selectSize').value;
+  var brandSelect = document.querySelector('.selectBrand').value;
+  var colorSelect = document.querySelector('.selectColor').value;
+   $.ajax({
+     url : '/api/shoes/brand/'+ brandSelect + '/size/'+ sizeSelect + '/color/' + colorSelect,
+     type: 'GET',
+     success: function(allResults){
+       displayTable.innerHTML = showTemplate({
+         shoe: allResults.shoeDetails
+       })
+
+     },
+     error:function(error){
+       alert(error)
+     }
+   })
+}
+
 function takenShoe(id){
   console.log(id);
 
@@ -196,6 +199,7 @@ function takenShoe(id){
      alert("error")
    }
  })
+
  $.ajax({
    url : '/api/shoes/color',
    type: 'GET',

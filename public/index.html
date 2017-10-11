@@ -4,17 +4,37 @@
 <head>
   <meta charset="utf-8">
   <link rel="stylesheet" href="shoes_api.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <title>shoes_catalogue</title>
 </head>
 
 <body>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Shoe Catalogue</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Home</a></li>
+        <li><div id="myBrandDrop"></div></li>
+        <li><div id="myColorDrop"></div></li>
+        <li><div id="mySizeDrop"></div></li>
+
+
+</div>
+      </ul>
+    </div>
+  </nav>
   <div class="container">
 
     <div class="row">
       <h1>Shoe Catalogue</h1>
 
     </div>
+
     <div class="head">
       <h2> First Select Here </h2>
       <script id="brandTemp" type="text/x-handlebars-template">
@@ -25,22 +45,22 @@
      <option value="{{this}}"> {{this}}</option>
      {{/each}}
      </select>
-   </div>
-    </script>
+        </div>
+      </script>
 
-<script id="colorTemp" type="text/x-handlebars-template">
-  <div id="colorDrop">
+      <script id="colorTemp" type="text/x-handlebars-template">
+        <div id="colorDrop">
           <select class="selectColor">
     <option value="" >Color</option>
      {{#each color}}
     <option value="{{this}}">{{this}}</option>
      {{/each}}
    </select>
-</div>
-</script>
+        </div>
+      </script>
 
-<script id="sizeTemp" type="text/x-handlebars-template">
-  <div id="sizeDrop">
+      <script id="sizeTemp" type="text/x-handlebars-template">
+        <div id="sizeDrop">
           <select class="selectSize">
   <option value="" >Size</option>
      {{#each size}}
@@ -49,6 +69,8 @@
    </select>
         </div>
       </script>
+
+
       <script id="mytableTem" type="text/x-handlebars-template">
         <table class="theTable">
           <thead>
@@ -64,53 +86,63 @@
             <td>{{this.color}}</td>
             <td>{{this.size}}</td>
             <td>{{this.price}}</td>
-            <td>{{this.in_stock}}  <button onclick='takenShoe("{{_id}}")' value ={{_id}} id="shoePurchase">buy</button></td>
+            <td>{{this.in_stock}} <button onclick='takenShoe("{{_id}}")' value={{_id}} id="shoePurchase">buy</button></td>
           </tbody>
           {{/each}}
         </table>
       </script>
 
-      <div id="myBrandDrop">
-      </div>
-      <div id="myColorDrop">
-      </div>
-      <div id="mySizeDrop">
-      </div>
 
 
 
 
+      <button type="button" class="btn btn-success btn-md" data-toggle="modal" data-target="#inputsToAddStock">Add Stock</button>
       <div class="addStock">
-        <button class="searchBton" type="button">Search</button>
+        <button class="btn btn-success btn-md" id="searchBton" type="button">Search</button>
 
       </div>
-
-      <div class="inputsContainer">
-        <div class="addbrand">
-          <input type="text" class="inbrand" placeholder="Add shoe brand"><br>
-        </div>
-        <div class="addcolor">
-          <input type="text" class="incolor" placeholder="Add shoe color"><br>
-        </div>
-        <div class="addsize">
-          <input type="text" class="insize" placeholder="Add shoe size"><br>
-        </div>
-        <div class="addprice">
-          <input type="text" class="inprice" placeholder="Add shoe price"><br>
-        </div>
-        <div class="addin_stock">
-          <input type="text" class="instock" placeholder="Add shoe in_stock"><br>
-        </div>
-        <div class="addstock">
+      <!-- Modal -->
+      <div id="inputsToAddStock" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+          <!-- <div class="inputsToAddStock"> -->
+          <div class="modal-content">
+            <h3 class="modal-title">Adding a new shoe</h3>
+          </div>
+          <div class="modal-body">
+            <div class="addbrand">
+              <input type="text" class="inbrand" placeholder="Add shoe brand"><br>
+            </div>
+            <div class="addcolor">
+              <input type="text" class="incolor" placeholder="Add shoe color"><br>
+            </div>
+            <div class="addsize">
+              <input type="text" class="insize" placeholder="Add shoe size"><br>
+            </div>
+            <div class="addprice">
+              <input type="text" class="inprice" placeholder="Add shoe price"><br>
+            </div>
+            <div class="addin_stock">
+              <input type="text" class="instock" placeholder="Add shoe in_stock"><br>
+            </div>
+          </div>
+          <!-- <div class="addstock">
           <button class="addingStock" type="button" align="center">Add stock</button>
+        </div> -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" id="addingStock" data-dismiss="modal">Add shoe</button>
+          </div>
         </div>
-      </div>
-      <div id="displayTable">
-
       </div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.min.js"></script>
-    <script src="shoes_api.js" charset="utf-8"></script>
+
+
+    <div id="displayTable">
+
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.min.js"></script>
+  <script src="shoes_api.js" charset="utf-8"></script>
+  </div>
   </div>
 </body>
 
