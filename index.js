@@ -81,8 +81,9 @@ app.get('/api/shoes/color/:color', function(req, res, next) {
 // GET	/api/shoes/brand/:brandname/size/:size
 app.get('/api/shoes/brand/:brandname/size/:size/color/:color', function(req, res, next) {
   var brandname = req.params.brandname;
-  var size = req.params.size;
-  var color = req.param.color;
+  var size =  req.params.size;
+  var color = req.params.color;
+  
   models.Stock.find({
     brand: brandname,
     size: size,
@@ -159,21 +160,12 @@ app.get('/api/shoes/color', function(req, res, next) {
       myColors
     })
   })
-})
-// console.log("--------------");
-app.post('/api/shoes', function(req, res, next) {
-  var brand = req.body.brand;
-  var color = req.body.color;
-  var price = req.body.price;
-  var size = req.body.size;
-  var in_stock = req.body.in_stock;
+});
 
-  models.Stock.findOneAndUpdate({
-    brand: brand,
-    color: color,
-    price: price,
-    size: size
-  }, {
+
+function updateOrAddShoe(shoeData, in_stock, cb){
+
+  models.Stock.findOneAndUpdate(shoeData, {
     $inc: {
       in_stock: in_stock
     }
@@ -182,19 +174,38 @@ app.post('/api/shoes', function(req, res, next) {
       console.log(err);
     } else if (!result) {
       models.Stock.create({
-        brand: brand,
-        color: color,
-        price: price,
-        size: size,
+        brand: shoeData.brand,
+        color: shoeData.color,
+        price: shoeData.price,
+        size: shoeData.size,
         in_stock: in_stock
-      }, function(err, result) {
-        if (err) {
-          console.log(err);
-        }
-      });
+      }, cb);
     }
+    else{
+      cb(null, result);
+    }
+
+  });
+
+}
+
+// console.log("--------------");
+app.post('/api/shoes', function(req, res, next) {
+
+  var brand = req.body.brand;
+  var color = req.body.color;
+  var price = req.body.price;
+  var size = req.body.size;
+  var in_stock = req.body.in_stock;
+
+  updateOrAddShoe({
+    brand: brand,
+    color: color,
+    price: price,
+    size: size
+  }, in_stock, function(err, results){
     res.json({
-      results: result
+      results
     });
   });
 
@@ -223,7 +234,7 @@ app.post('/api/shoes/sold/:id', function(req, res, next) {
           results: []
         })
       }
-      if (results.in_stock <= 0) {
+      if (results.in_stock <= 1) {
         results.remove()
       }
       res.json({

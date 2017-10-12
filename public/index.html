@@ -5,41 +5,49 @@
   <meta charset="utf-8">
   <link rel="stylesheet" href="shoes_api.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
   <title>shoes_catalogue</title>
 </head>
 
 <body>
+  <div class="container-fluid">
+    <div class="row">
   <nav class="navbar navbar-default">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <a class="navbar-brand" href="#">Shoe Catalogue</a>
+        <div class="col-lg-10">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#">Shoe Catalogue</a>
+          </div>
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li class=""><div id="myBrandDrop"></div></li>
+            <li class=""><div id="myColorDrop"></div></li>
+            <li class=""><div id="mySizeDrop"></div></li>
+          </ul>
+        </div>
+        <br>
+      <div class="col-lg-2 float-right">
+        <button class="btn btn-success btn-md" id="searchBton" type="button"> <span class="glyphicon glyphicon-search"></span>Search</button>
+        <button type="button" id="stockinputs"class="btn btn-success btn-md" data-toggle="modal" data-target="#inputsToAddStock">Add Stock</button>
       </div>
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Home</a></li>
-        <li><div id="myBrandDrop"></div></li>
-        <li><div id="myColorDrop"></div></li>
-        <li><div id="mySizeDrop"></div></li>
-
-
-</div>
-      </ul>
-    </div>
+      </div>
   </nav>
+</div>
   <div class="container">
 
     <div class="row">
-      <h1>Shoe Catalogue</h1>
+      <h1 id="headingTop">Shoe Catalogue</h1>
 
     </div>
 
     <div class="head">
-      <h2> First Select Here </h2>
+      <!-- <h2> First Select Here </h2> -->
       <script id="brandTemp" type="text/x-handlebars-template">
         <div class="brandDrop">
-          <select class="selectBrand">
+          <select class="selectpicker" id="selectBrand">
       <option value="" >Brand</option>
      {{#each brand}}
      <option value="{{this}}"> {{this}}</option>
@@ -50,7 +58,7 @@
 
       <script id="colorTemp" type="text/x-handlebars-template">
         <div id="colorDrop">
-          <select class="selectColor">
+          <select class="selectpicker" id="selectColor">
     <option value="" >Color</option>
      {{#each color}}
     <option value="{{this}}">{{this}}</option>
@@ -61,7 +69,7 @@
 
       <script id="sizeTemp" type="text/x-handlebars-template">
         <div id="sizeDrop">
-          <select class="selectSize">
+          <select class="selectpicker" id="selectSize">
   <option value="" >Size</option>
      {{#each size}}
     <option value="{{this}}" > {{this}}</option>
@@ -72,13 +80,14 @@
 
 
       <script id="mytableTem" type="text/x-handlebars-template">
-        <table class="theTable">
+        <table class="table table-hover" id="theTable">
           <thead>
             <th>Brand</th>
             <th>Color</th>
             <th>Size</th>
             <th>Price</th>
             <th>In_stock</th>
+            <th>Purchases</th>
           </thead>
           <tbody>
             {{#each shoe}}
@@ -86,7 +95,8 @@
             <td>{{this.color}}</td>
             <td>{{this.size}}</td>
             <td>{{this.price}}</td>
-            <td>{{this.in_stock}} <button onclick='takenShoe("{{_id}}")' value={{_id}} id="shoePurchase">buy</button></td>
+            <td>{{this.in_stock}}</td>
+            <td><button  class="btn btn-success btn-md"onclick='takenShoe("{{_id}}")' value={{_id}} id="shoePurchase">buy</button></td>
           </tbody>
           {{/each}}
         </table>
@@ -95,19 +105,21 @@
 
 
 
-
-      <button type="button" class="btn btn-success btn-md" data-toggle="modal" data-target="#inputsToAddStock">Add Stock</button>
+<!-- 
       <div class="addStock">
-        <button class="btn btn-success btn-md" id="searchBton" type="button">Search</button>
 
-      </div>
+      </div> -->
       <!-- Modal -->
-      <div id="inputsToAddStock" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-          <!-- <div class="inputsToAddStock"> -->
-          <div class="modal-content">
-            <h3 class="modal-title">Adding a new shoe</h3>
-          </div>
+
+  <div class="row align-items-center">
+  <div id="inputsToAddStock" class="modal fade text-center" role="dialog" >
+    <div class="modal-content col-6 " role="document">
+      <div class="modal-header">
+        <h3 class="modal-title">Adding a new shoe</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
           <div class="modal-body">
             <div class="addbrand">
               <input type="text" class="inbrand" placeholder="Add shoe brand"><br>
@@ -134,6 +146,7 @@
         </div>
       </div>
     </div>
+
 
 
     <div id="displayTable">
