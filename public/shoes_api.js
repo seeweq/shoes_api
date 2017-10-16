@@ -37,7 +37,10 @@ function showAllShoes() {
 }
 
 showAllShoes();
-
+$('.selectpicker').selectpicker({
+  style: 'btn-info',
+  size: 4
+});
 $(document).ready(function() {
   $("#myAddButton").click(function() {
     $("#inputsToAddStock").modal();
@@ -81,13 +84,6 @@ function setupAddNewShoe() {
 }
 
 setupAddNewShoe();
-
-
-$('.selectpicker').selectpicker({
-  style: 'btn-info',
-  size: 4
-});
-
 
 function filterData() {
   mySearchBton.addEventListener('click', function() {
