@@ -98,6 +98,64 @@ app.get('/api/shoes/brand/:brandname/size/:size/color/:color', function(req, res
     }
   })
 });
+app.get('/api/shoes/brand/:brandname/size/:size', function(req, res, next) {
+  var brandname = req.params.brandname;
+  var size =  req.params.size;
+
+
+  models.Stock.find({
+    brand: brandname,
+    size: size
+
+  }, function(err, shoeDetail) {
+    if (err) {
+      return next(err)
+    } else {
+      res.json({
+        shoeDetail
+      })
+    }
+  })
+});
+
+app.get('/api/shoes/brand/:brandname/color/:color', function(req, res, next) {
+  var brandname = req.params.brandname;
+  var color =  req.params.color;
+
+
+  models.Stock.find({
+    brand: brandname,
+    color: color
+
+  }, function(err, shoeBrandandcolor) {
+    if (err) {
+      return next(err)
+    } else {
+      res.json({
+        shoeBrandandcolor
+      })
+    }
+  })
+});
+app.get('/api/shoes/size/:size/color/:color', function(req, res, next) {
+  var color = req.params.color;
+  var size =  req.params.size;
+
+
+  models.Stock.find({
+    size: size,
+    color: color
+
+  }, function(err, shoesizeandcolor) {
+    if (err) {
+      return next(err)
+    } else {
+      res.json({
+        shoesizeandcolor
+      })
+    }
+  })
+});
 
 app.get('/api/shoes/brand', function(req, res, next) {
   models.Stock.find({}, function(err, theBrand) {
