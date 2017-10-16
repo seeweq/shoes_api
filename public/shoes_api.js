@@ -218,7 +218,7 @@ function filterByTwo() {
     })
   }
 }
-
+filterByTwo();
 function takenShoe(id) {
   console.log(id);
 
