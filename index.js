@@ -83,7 +83,7 @@ app.get('/api/shoes/brand/:brandname/size/:size/color/:color', function(req, res
   var brandname = req.params.brandname;
   var size =  req.params.size;
   var color = req.params.color;
-  
+
   models.Stock.find({
     brand: brandname,
     size: size,

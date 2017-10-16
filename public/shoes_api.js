@@ -195,6 +195,7 @@ $.ajax({
     showBrandDrop.innerHTML = dropForBrand({
       brand: responds.myBrands
     })
+
   },
   error: function(error) {
     alert("error")

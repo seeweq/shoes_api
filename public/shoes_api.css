@@ -20,31 +20,22 @@
 {
     margin-left: 7px;
 }
-#searchBton
-{
-    /*position: fixed !important;
-    right: 29px;*/
 
-    margin-bottom: : 5px;
+
+
+nav
+{
+    background-color: #800000 !important;
 }
-/*#stockinputs{
-  margin-left: 20px;
-  margin-top: 5px;
-}*/
-nav{
-  background-color:#800000 !important;
-}
-/*#displayTable{
-    background: radial-gradient(white,grey) ;
-}*/
+
 
 table,
 th,
 td
 {
-    border-color: #800000 !important;
     border: solid;
     border-width: thin;
+    border-color: #800000 !important;
 }
 table#theTable
 {
