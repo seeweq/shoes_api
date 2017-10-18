@@ -127,12 +127,12 @@ app.get('/api/shoes/brand/:brandname/color/:color', function(req, res, next) {
     brand: brandname,
     color: color
 
-  }, function(err, shoeBrandandcolor) {
+  }, function(err, shoeBrandAndColor) {
     if (err) {
       return next(err)
     } else {
       res.json({
-        shoeBrandandcolor
+        shoeBrandAndColor
       })
     }
   })
@@ -146,12 +146,12 @@ app.get('/api/shoes/size/:size/color/:color', function(req, res, next) {
     size: size,
     color: color
 
-  }, function(err, shoesizeandcolor) {
+  }, function(err, shoeSizeAndColor) {
     if (err) {
       return next(err)
     } else {
       res.json({
-        shoesizeandcolor
+        shoeSizeAndColor
       })
     }
   })
