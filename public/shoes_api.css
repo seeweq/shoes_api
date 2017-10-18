@@ -1,4 +1,6 @@
-
+/*.container{
+  background-image: url("background.jpg");
+}*/
 #headingTop
 {
     font-family: 'Roboto', sans-serif;
@@ -19,6 +21,13 @@
 #shoePurchase
 {
     margin-left: 7px;
+}
+.ifEmpty{
+  width: 100%;
+  height: 500px;
+  background-color: white;
+  margin-top: -5px;
+  text-align: center;
 }
 
 

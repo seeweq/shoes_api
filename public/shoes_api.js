@@ -96,7 +96,7 @@ function clearInputs() {
 }
 clearInputs();
 
-function renderBrandDropdown() {
+function renderBrandDropdown(fn) {
   $.ajax({
     url: '/api/shoes/brand',
     type: 'GET',
@@ -111,13 +111,14 @@ function renderBrandDropdown() {
         size: 4
       });
 
+      fn();
     },
     error: errorHandler
   })
 }
 
 
-function renderSizeDropdown() {
+function renderSizeDropdown(fn) {
   $.ajax({
     url: '/api/shoes/size',
     type: 'GET',
@@ -131,13 +132,14 @@ function renderSizeDropdown() {
         style: 'btn-default',
         size: 4
       });
+      fn();
 
     },
     error: errorHandler
   })
 }
 
-function renderColorDropdown() {
+function renderColorDropdown(fn) {
   $.ajax({
     url: '/api/shoes/color',
     type: 'GET',
@@ -151,22 +153,21 @@ function renderColorDropdown() {
         style: 'btn-default',
         size: 4
       });
-
+      fn();
     },
     error: errorHandler
   })
 }
 
-function showDropDowns() {
+function showDropDowns(fn) {
 
-  renderBrandDropdown();
-  renderSizeDropdown();
-  renderColorDropdown();
-
+  renderBrandDropdown(function(){
+      renderSizeDropdown(function(){
+          renderColorDropdown(fn);
+      });
+  });
+  
 }
-showDropDowns();
-
-
 
 function filterData() {
   mySearchBton.addEventListener('click', function() {
@@ -219,6 +220,9 @@ function filterData() {
     }
   })
 }
+
+
+
 filterData();
 
 function filterByAll() {
@@ -247,6 +251,7 @@ function filterByAll() {
 
 
  function filterByTwo() {
+
   var brandSelect = document.querySelector('#selectBrand').value;
   var colorSelect = document.querySelector('#selectColor').value;
   var sizeSelect = document.querySelector('#selectSize').value;
@@ -290,8 +295,11 @@ function filterByAll() {
     })
   }
 }
-// filterByTwo();
 
+showDropDowns(function(){
+  // only do this when all the dropdowns is loaded...
+  filterByTwo();
+});
 
 function takenShoe(id) {
   console.log(id);
