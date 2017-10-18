@@ -290,7 +290,7 @@ function filterByAll() {
     })
   }
 }
-filterByTwo();
+// filterByTwo();
 
 
 function takenShoe(id) {
